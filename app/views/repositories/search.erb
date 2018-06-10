@@ -1,11 +1,31 @@
+<div class="container">
+<% if @repos != nil 
+actualLang = '' %>
 <div class="row">
-<% @reposByLanguages.each do |repos| %>
-    <% if repos.to_options[:items] != nil %>
-    <div class="col">
-        <% repos.to_options[:items].each do |repo| %>
-        <%= repo.to_options[:name] %>
+    <div class="col-6">
+        <div class="list-group">
+    <% @repos.each do |repo| %>
+        <% if actualLang != repo.language %>
+            <% if actualLang != '' %>
+                </div></div><div class="col-6"><div class="list-group">
+            <% end %>
+            <div class="list-group-item"><%= repo.language %></div>
         <% end %>
-    </div>
+
+        <a class="list-group-item list-group-action d-flex justify-content-between" href="repository/<%= repo.id %>">
+            <h5><%= repo.name.capitalize %></h5>
+            <p><%= repo.description %>
+            <br />
+            <small>https://github.com/<%= repo.url %></small>
+            </p>
+        </a>
+
+        <% if actualLang != repo.language %>
+            <% actualLang = repo.language %>
+        <% end %>
     <% end %>
+        </div>
+    </div>
+</div>
 <% end %>
 </div>

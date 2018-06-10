@@ -1,18 +1,45 @@
-<html>
-<head>
-    <title></title>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" />
-</head>
-<body>
+<div class="container">
     <div class="row">
-        <form action="" method="POST">
-            <!-- <select name="languages[]" maximum=5 id="" multiple size=10>
-                <% @languages.each do |language| %>
-                <option><%= language[0] %></option>
+        <div class="col">
+            <form action="" method="POST" class="d-flex justify-content-center">
+                <% if @response != nil %>
+                <div class="alert alert-warning"><%= @response.to_options[:message] %></div>
                 <% end %>
-            </select> -->
-            <button>Buscar Repositórios</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Buscar Repositórios Destaque</button>
+            </form>
+        </div>
     </div>
-</body>
-</html>
+<% if @repos != nil
+actualLang = '' %>
+<div class="row">
+    <div class="col"><h3>Repositórios já cadastrados:</h3></div>
+</div>
+
+<div class="row">
+    <div class="col-xs-6">
+        <div class="list-group">
+    <% @repos.each do |repo| %>
+        <% if actualLang != repo.language %>
+            <% if actualLang != '' %>
+                </div></div><div class="col-xs-6"><div class="list-group">
+            <% end %>
+            <div class="list-group-item"><%= repo.language %></div>
+        <% end %>
+
+        <a class="list-group-item list-group-action d-flex justify-content-between" href="repository/<%= repo.id %>">
+            <h5><%= repo.name.capitalize %></h5>
+            <p><%= repo.description %>
+            <br />
+            <small>https://github.com/<%= repo.url %></small>
+            </p>
+        </a>
+
+        <% if actualLang != repo.language %>
+            <% actualLang = repo.language %>
+        <% end %>
+    <% end %>
+        </div>
+    </div>
+</div>
+<% end %>
+</div>

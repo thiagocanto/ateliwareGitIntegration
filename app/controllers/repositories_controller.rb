@@ -4,22 +4,39 @@ class RepositoriesController < ApplicationController
     require 'net/http'
     
     def index
-        # Language URL example https://api.github.com/repos/{user}/{repo}/languages
-        url = URI.parse("https://api.github.com/repos/dotnet/corefx/languages")
-        res = Net::HTTP.get_response(url)
-        @languages = JSON.parse res.body
+        @repos = Repository.all
     end
 
     def search
-        languages = ['elixir','ruby','php'];
+        languages = ['elixir','ruby','php','c#'];
         topRepos = []
         # params[:languages].each do |language|
         languages.each do |language|
             url = URI.parse("https://api.github.com/search/repositories?q=language:#{language}&per_page=5")
             res = Net::HTTP.get_response(url)
-            topRepos << (JSON.parse res.body)
+            repos = JSON.parse res.body
+            @response = repos
+
+            if repos.to_options[:items] != nil
+                repos.to_options[:items].each do |loadedRepo|
+                    if Repository.where(url: loadedRepo.to_options[:full_name]) 
+                        next
+                    end
+
+                    repo = Repository.new
+                    repo.name = loadedRepo.to_options[:name]
+                    repo.url = loadedRepo.to_options[:full_name]
+                    repo.language = loadedRepo.to_options[:language]
+                    repo.owner = loadedRepo.to_options[:owner].to_options[:login]
+                    repo.description = loadedRepo.to_options[:description]
+                    repo.save
+                end
+            end
+            
         end
 
-        @reposByLanguages = topRepos 
+        @repos = Repository.all
+
+        render "index"
     end
 end
