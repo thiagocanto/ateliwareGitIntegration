@@ -4,7 +4,7 @@
             <form action="<%= root_url %>" method="POST" class="d-flex justify-content-center">
                 <% if @response != nil %>
                     <% if @response.to_options[:errors] != nil %>
-                    <div class="alert alert-danger"><%= @response.to_options[:errors][0]:to_options[:message] %></div>
+                    <div class="alert alert-danger"><%= @response.to_options[:errors][0].to_options[:message] %></div>
                     <% end %>
                     <% if @response.to_options[:message] != nil %>
                     <div class="alert alert-warning"><%= @response.to_options[:message] %></div>
