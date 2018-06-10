@@ -14,6 +14,8 @@ class RepositoriesController < ApplicationController
             url = URI.parse("https://api.github.com/search/repositories?q=language:#{language}&per_page=5")
             res = Net::HTTP.get_response(url)
             repos = JSON.parse res.body
+            @response = repos
+            puts @response
             
             if repos.to_options[:items] != nil
                 repos.to_options[:items].each do |loadedRepo|
@@ -29,9 +31,6 @@ class RepositoriesController < ApplicationController
                     repo.description = loadedRepo.to_options[:description]
                     repo.save
                 end
-            else
-                @response = repos
-                puts @response
             end
             
         end
