@@ -3,7 +3,7 @@ class RepositoriesController < ApplicationController
     require 'net/http'
     
     def index
-        @repos = Repository.all
+        @repos = Repository.order(:language)
     end
 
     def search
@@ -38,7 +38,7 @@ class RepositoriesController < ApplicationController
             
         end
 
-        @repos = Repository.all
+        @repos = Repository.order(:language)
 
         render "index"
     end
