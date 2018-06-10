@@ -1,0 +1,11 @@
+<div class="row">
+<% @reposByLanguages.each do |repos| %>
+    <% if repos.to_options[:items] != nil %>
+    <div class="col">
+        <% repos.to_options[:items].each do |repo| %>
+        <%= repo.to_options[:name] %>
+        <% end %>
+    </div>
+    <% end %>
+<% end %>
+</div>
