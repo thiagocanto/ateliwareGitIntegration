@@ -7,19 +7,22 @@ class RepositoriesController < ApplicationController
     end
 
     def search
-        languages = ['elixir','ruby','php','c#','c++'];
+        languages = ['elixir','ruby','php','c\#','c\+\+'];
         topRepos = []
         # params[:languages].each do |language|
         languages.each do |language|
             url = URI.parse("https://api.github.com/search/repositories?q=language:#{language}&per_page=5")
             res = Net::HTTP.get_response(url)
             repos = JSON.parse res.body
+
             @response = repos
-            puts @response
+            puts "Parsing fetched url: #{url}"
             
             if repos.to_options[:items] != nil
                 repos.to_options[:items].each do |loadedRepo|
-                    if Repository.where(url: loadedRepo.to_options[:full_name]) 
+                    if Repository.where(url:loadedRepo.to_options[:full_name]).take 
+                        puts Repository.where(url:loadedRepo.to_options[:full_name]).take
+                        puts "Repository #{loadedRepo.to_options[:full_name]} found. Skipping insertion."
                         next
                     end
 
