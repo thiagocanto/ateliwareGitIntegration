@@ -8,7 +8,7 @@ class RepositoriesController < ApplicationController
     end
 
     def search
-        languages = ['elixir','ruby','php','c#'];
+        languages = ['elixir','ruby','php','c#','c++'];
         topRepos = []
         # params[:languages].each do |language|
         languages.each do |language|
@@ -38,5 +38,9 @@ class RepositoriesController < ApplicationController
         @repos = Repository.all
 
         render "index"
+    end
+
+    def show
+        @repo = Repository.find(params[:id])
     end
 end

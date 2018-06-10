@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <form action="" method="POST" class="d-flex justify-content-center">
+            <form action="<%= root_url %>" method="POST" class="d-flex justify-content-center">
                 <% if @response != nil %>
                 <div class="alert alert-warning"><%= @response.to_options[:message] %></div>
                 <% end %>
