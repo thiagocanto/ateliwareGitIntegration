@@ -84,6 +84,7 @@ test:
 #
 production:
   <<: *default
-  database: ateliwaregitapi_production
-  username: ateliwaregitapi
+  host: ec2-54-221-234-62.compute-1.amazonaws.com
+  database: <%= ENV['ATELIWAREGITAPI_DATABASE_DATABASE'] %>
+  username: <%= ENV['ATELIWAREGITAPI_DATABASE_USERNAME'] %>
   password: <%= ENV['ATELIWAREGITAPI_DATABASE_PASSWORD'] %>
