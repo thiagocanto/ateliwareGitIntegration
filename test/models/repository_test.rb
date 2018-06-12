@@ -1,11 +1,7 @@
 require 'test_helper'
 
 class RepositoryTest < ActiveSupport::TestCase
-  test "save without name" do
-    repository = Repository.new
-    assert_not repository.save
-  end
-  test "save without url" do
+  test "save without required fields" do
     repository = Repository.new
     assert_not repository.save
   end
